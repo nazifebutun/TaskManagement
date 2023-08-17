@@ -1,0 +1,46 @@
+﻿﻿@using TaskManagement.Models;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <table class="table table-striped">
+
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Service Name</th>
+                            <th scope="col">BT Personnel Name</th>
+                            <th scope="col">Personnel Name</th>
+                            <th scope="col">Condition</th>
+                            <th scope="col">Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>naz</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row gx-2">
+                    <div class="col-md-2 ">
+                        @Html.DropDownList("Service",null,"Service",new {@class= "form-control"})
+                    </div>
+                    <div class="col-md-2">
+                        @Html.DropDownList("BTPer",null,"BT Personnel",new {@class= "form-control"})
+                    </div>
+                    <div class="col-md-2">
+                        @Html.DropDownList("Per",null,"Personnel",new {@class= "form-control"})
+                    </div>
+                    <div class="col-md-2">
+                        @Html.DropDownList("condition",null,"Service Condition",new {@class= "form-control"})
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
