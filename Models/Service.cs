@@ -4,7 +4,6 @@ namespace TaskManagement.Models
 {
     public class Service
     {
-
         public int Id { get; set; }
         public string ServiceName { get; set; }
         public DateTime RecordTime { get; set; }
@@ -14,7 +13,5 @@ namespace TaskManagement.Models
         public Condition Condition { get; set; }
         public Personnel Personnel { get; set; }
         public BTPersonnel BTPersonnel { get; set; }
-
-
     }
 }

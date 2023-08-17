@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using TaskManagement.Models;
 
@@ -16,7 +17,7 @@ namespace TaskManagement.Controllers
         }
 
         Context context = new Context();
-        
+        [HttpGet]
         public IActionResult Admin()
         {
             ViewBag.condition = context.Conditions.Select(c => new SelectListItem
@@ -37,21 +38,26 @@ namespace TaskManagement.Controllers
                 Text = c.NameSurname,
                 
             });
-
             ViewBag.Service = context.Services.Select(c => new SelectListItem
             {
                 Value = c.Id.ToString(),
                 Text = c.ServiceName,
 
             });
-
-
+            Condition condition = new Condition();
+            ViewBag.ser = context.Services.ToList();
             return View();
         }
-        
+        [HttpPost]
+        public IActionResult Admin(Service service)
+        {
+            var add = context.Services.Add(service);
 
+            context.SaveChanges();
+            return RedirectToAction("Admin");
+        }
 
-        public IActionResult Index()
+            public IActionResult Index()
         {
             return View();
         }

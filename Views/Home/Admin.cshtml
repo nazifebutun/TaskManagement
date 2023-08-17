@@ -2,11 +2,65 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="container">
+    <div class="justify-content-center">
+        <div class="row">
+            <form asp-action="Admin" method="post">
+                <div class="col-md-2 ">
+                    <div style="right:50px;" >
+                        <label>İstenilen Servis </label>
+                    </div>
+                    @Html.DropDownList("Service",null,"Service",new {@class= "form-control"})
+                    <p> </p>
+                    <p> </p>
+                </div>
+                <div class="col-md-8">
+                    <label for="exampleInputPassword1" class="form-label"> Service Description</label>
+                    <textarea class="form-control" rows="3" id="comment"></textarea>
+                    <p> </p>
+                </div>
+    
+                <div class="col-md-2">
+                    <label>Personel</label>
+                    @Html.DropDownList("Per",null,"Personnel",new {@class= "form-control"})
+                    <p> </p>
+                </div>
+                <div class="col-md-2">
+                    <label>Görevli Personel</label>
+                    @Html.DropDownList("BTPer",null,"BT Personnel",new {@class= "form-control"})
+                    <p> </p>
+                </div>
+        
+                <div class="col-md-8">
+                    <label for="exampleInputPassword1" class="form-label">Kayıt Tarihi</label>
+                    <input type="date" class="form-control" id="exampleInputPassword1">
+                    <p> </p>
+                </div>
+                <div class="col-md-8">
+                    <label for="exampleInputPassword1" class="form-label">Bitiş Tarihi</label>
+                    <input type="date" class="form-control" id="exampleInputPassword1">
+                    <p> </p>
+                </div>
+                <div class="col-md-2">
+                    @Html.DropDownList("condition",null,"Service Condition",new {@class= "form-control"})
+                    <p> </p>
+                    </div>
+                    <div class="col-md-2 offset-7">
+                        <button class="btn btn-primary" type="submit">Add Department</button>
+                    </div>
+            </form>
+            
+        </div>
+    </div>
+    
+</div>
 
+<p></p>
+<p></p>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="row">
+            <div class="row">              
                 <table class="table table-striped">
 
                     <thead>
@@ -21,25 +75,35 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach (var item in ViewBag.ser as List<TaskManagement.Models.Service>)
+                        {
+                            var tm = "#myModal" + item.Id;
+                            var mid = "myModal" + item.Id;
+                            <tr>
+                                <th scope="row">@item.Id</th>
+                                <td>@item.RecordTime</td>
+                                <td>@item.ServiceName</td>
+                                <td>@item.BTPersonnel</td>
+                                <td>@item.Personnel</td>
+                                <td>@item.Condition</td>
+                               <!--eğer olumluysa küçük bir işaret koyacam-->
+
+
+
+                                <!--<td>
+                                    <div class="col-md-2 offset-7">
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@("AddService-" + item.Id)" data-url="@Url.Action($"AddService/{item.Id}")">Add Service</button>
+                                    </div>
+                                    @await Html.PartialAsync("_AdminPartial",item)
+                                </td>-->
+                            </tr>
+                        }
                         <tr>
-                            <td>naz</td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
-                <div class="row gx-2">
-                    <div class="col-md-2 ">
-                        @Html.DropDownList("Service",null,"Service",new {@class= "form-control"})
-                    </div>
-                    <div class="col-md-2">
-                        @Html.DropDownList("BTPer",null,"BT Personnel",new {@class= "form-control"})
-                    </div>
-                    <div class="col-md-2">
-                        @Html.DropDownList("Per",null,"Personnel",new {@class= "form-control"})
-                    </div>
-                    <div class="col-md-2">
-                        @Html.DropDownList("condition",null,"Service Condition",new {@class= "form-control"})
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>
