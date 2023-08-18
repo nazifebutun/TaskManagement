@@ -17,46 +17,12 @@ namespace TaskManagement.Controllers
         }
 
         Context context = new Context();
-        [HttpGet]
+        
         public IActionResult Admin()
         {
-            ViewBag.condition = context.Conditions.Select(c => new SelectListItem
-            {
-                Value = c.Id.ToString(),
-                Text = c.CondName,
-            });
-
-            ViewBag.BTPer = context.BTPersonnels.Select(c => new SelectListItem
-            {
-                Value = c.Id.ToString(),
-                Text = c.NameSurname,
-            });
-
-            ViewBag.Per = context.Personnels.Select(c => new SelectListItem
-            {
-                Value = c.Id.ToString(),
-                Text = c.NameSurname,
-                
-            });
-            ViewBag.Service = context.Services.Select(c => new SelectListItem
-            {
-                Value = c.Id.ToString(),
-                Text = c.ServiceName,
-
-            });
-            Condition condition = new Condition();
-            ViewBag.ser = context.Services.ToList();
             return View();
         }
-        [HttpPost]
-        public IActionResult Admin(Service service)
-        {
-            var add = context.Services.Add(service);
-
-            context.SaveChanges();
-            return RedirectToAction("Admin");
-        }
-
+        
             public IActionResult Index()
         {
             return View();
@@ -66,7 +32,54 @@ namespace TaskManagement.Controllers
         {
             return View();
         }
-        
+
+        [HttpGet]
+        public IActionResult AddPersonnel()
+        {
+            ViewBag.dep = context.Personnels.ToList();
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddPersonnel(Personnel per)
+        {
+            var ekle = context.Personnels.Add(per);
+            context.SaveChanges();
+            return RedirectToAction("Admin");
+
+            // return RedirectToAction("AddDepartment", ekle);  partiala yönlendirmek için
+            // @await Html.PartialAsync("_EditDepartmentPartial", item)
+        }
+
+        [HttpGet]
+        public IActionResult AddService()
+        {
+            ViewBag.personnel = new SelectList(context.Personnels, "Id", "NameSurname");
+            ViewBag.con = new SelectList(context.Conditions, "Id", "CondName");
+            ViewBag.BTPerson = new SelectList(context.BTPersonnels, "Id", "NameSurname");
+            ViewBag.ServiceGet = context.Services.Include(x => x.Personnel).Include(x => x.Condition).Include(x=>x.BTPersonnel).ToList();
+            return View("Admin");
+        }
+
+
+        [HttpPost]
+        public IActionResult AddService(Service ser)
+        {
+            if (!ModelState.IsValid)
+            {
+
+                var service = context.Personnels.Where(x => x.Id == ser.Personnel.Id).FirstOrDefault();
+                ser.Personnel = service;
+                context.Services.Add(ser);
+                context.SaveChanges();
+            
+                return RedirectToAction("Admin");
+            }
+            else
+            {
+                return View("Admin");
+            }
+
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
