@@ -1,27 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
+
 using TaskManagement.Models;
 
 
 namespace TaskManagement.Controllers
 {
+    
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
+       
         Context context = new Context();
-        
-        public IActionResult Admin()
-        {
-            return View();
-        }
         
             public IActionResult Index()
         {
@@ -36,55 +26,52 @@ namespace TaskManagement.Controllers
         [HttpGet]
         public IActionResult AddPersonnel()
         {
-            ViewBag.dep = context.Personnels.ToList();
-            return View();
+            ViewBag.person = context.Personnels.ToList();
+            return View("Admin");
         }
         [HttpPost]
         public IActionResult AddPersonnel(Personnel per)
         {
             var ekle = context.Personnels.Add(per);
             context.SaveChanges();
-            return RedirectToAction("Admin");
+            return RedirectToAction("Admin",ekle);
 
             // return RedirectToAction("AddDepartment", ekle);  partiala yönlendirmek için
             // @await Html.PartialAsync("_EditDepartmentPartial", item)
         }
 
         [HttpGet]
-        public IActionResult AddService()
+        public IActionResult Admin()
         {
-            ViewBag.personnel = new SelectList(context.Personnels, "Id", "NameSurname");
+            ViewBag.person = new SelectList(context.Personnels,"Id", "NameSurname");
             ViewBag.con = new SelectList(context.Conditions, "Id", "CondName");
             ViewBag.BTPerson = new SelectList(context.BTPersonnels, "Id", "NameSurname");
-            ViewBag.ServiceGet = context.Services.Include(x => x.Personnel).Include(x => x.Condition).Include(x=>x.BTPersonnel).ToList();
-            return View("Admin");
+            ViewBag.ServiceGet = context.Services.Include(x=>x.Personnel).ToList();
+            
+            return View();
         }
 
 
         [HttpPost]
-        public IActionResult AddService(Service ser)
+        public IActionResult Admin(Service ser)
         {
-            if (!ModelState.IsValid)
+
+            var pers = context.Personnels.Where(x => x.Id == ser.Personnel.Id).FirstOrDefault();
+            var cond = context.Conditions.Where(x => x.Id == ser.Condition.Id).FirstOrDefault();
+            var BTPers = context.BTPersonnels.Where(x => x.Id == ser.BTPersonnel.Id).FirstOrDefault();
+            if(pers == null)
             {
 
-                var service = context.Personnels.Where(x => x.Id == ser.Personnel.Id).FirstOrDefault();
-                ser.Personnel = service;
-                context.Services.Add(ser);
-                context.SaveChanges();
-            
-                return RedirectToAction("Admin");
             }
-            else
-            {
-                return View("Admin");
-            }
-
+            ser.Personnel = pers;
+            ser.Condition = cond;
+            ser.BTPersonnel = BTPers;
+            context.Services.Add(ser);
+            context.SaveChanges();
+          
+            return View("Admin");
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+ 
     }
 }

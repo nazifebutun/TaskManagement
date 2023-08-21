@@ -7,55 +7,56 @@
 <div class="container">
     <div class="justify-content-center">
         <div class="row">
-            
+            <form asp-action="Admin" method="post">
                 <div class="form-group">
-                       @* <div class="col-md-2 ">
+                       <div class="col-md-2 ">
                             <label>İstenilen Servis </label>        
-                            @Html.DropDownListFor(x => x.Id,(SelectList)ViewBag.Service,new { @class = "form-control" })
-                        </div>*@
+                            @*@Html.DropDownListFor(x => x.ServiceName,(SelectList)ViewBag.Service,new { @class = "form-control" })*@
+                        </div>
                     <div class="col-md-8">
                         <label for="exampleInputPassword1" class="form-label"> Service Description</label>
-                        <input type="text" class="form-control" name="ServiceDescription" required="" placeholder="Service Description ">
-                        <textarea class="form-control" rows="3" id="comment"></textarea>
-                  
+                        <input type="text" class="form-control" name="ServiceDescription" placeholder="Service Description ">
+             
                     </div>
     
                     <div class="col-md-2">
-                        <label>Personel</label>
-                        @Html.DropDownListFor(x=> x.Personnel.Id,(SelectList)ViewBag.personnel,new{ @class = "form-control" });
+                        
+                        <label for="exampleFormControlInput1" class="form-label">Personel</label>
+                        <input type="text" class="form-control" name="NameSurname"  placeholder="Personnel Name">
+                       
                    
                     </div>
                     <div class="col-md-2">
                         <label>Görevli Personel</label>
-                        @Html.DropDownListFor(x=> x.BTPersonnel,(SelectList)ViewBag.BTPerson,new{ @class = "form-control" });
-
+                        @Html.DropDownListFor(x=> x.BTPersonnel,(SelectList)ViewBag.BTPerson, new { @class = "form-control" })
+  
                     
                     </div>
         
                     <div class="col-md-8">
                         <label for="exampleInputPassword1" class="form-label">Kayıt Tarihi</label>
-                        <input type="date" class="form-control" name="RecordTime" required="" placeholder="Record Time" id="exampleInputPassword1">
+                        <input type="date" class="form-control" name="RecordTime"  placeholder="Record Time" id="exampleInputPassword1">
                    
                     </div>
                     <div class="col-md-8">
                         <label for="exampleInputPassword1" class="form-label">Bitiş Tarihi</label>
-                        <input type="date" class="form-control" name="EndTime" required="" placeholder="End Time" id="exampleInputPassword1">
+                        <input type="date" class="form-control" name="EndTime"  placeholder="End Time" id="exampleInputPassword1">
                     
                     </div>
                     <div class="col-md-2">
-                        @Html.DropDownListFor(x=> x.Condition,(SelectList)ViewBag.con,new{ @class = "form-control" });
-                        
-                  
-                    </div>
-                </div>
+                        @Html.DropDownListFor(x=> x.Condition,(SelectList)ViewBag.con,new{ @class = "form-control" })
+
+
+                    </div> 
                     <div class="col-md-2 offset-7">
                         <button class="btn btn-primary" type="submit">Add Department</button>
                     </div>
-            
-            
+                </div>
+            </form>
+
+
         </div>
     </div>
-    
 </div>
 
 <p></p>
@@ -78,7 +79,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in ViewBag.ser as List<TaskManagement.Models.Service>)
+                        @foreach (var item in ViewBag.ServiceGet as List<Service>)
                         {
                             var tm = "#myModal" + item.Id;
                             var mid = "myModal" + item.Id;
@@ -93,12 +94,12 @@
 
 
 
-                                <!--<td>
+                                @*<td>
                                     <div class="col-md-2 offset-7">
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#@("AddService-" + item.Id)" data-url="@Url.Action($"AddService/{item.Id}")">Add Service</button>
                                     </div>
                                     @await Html.PartialAsync("_AdminPartial",item)
-                                </td>-->
+                                </td>*@
                             </tr>
                         }
                         <tr>
