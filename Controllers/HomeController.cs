@@ -18,60 +18,86 @@ namespace TaskManagement.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Privacy() 
         {
             return View();
         }
-
+       
         [HttpGet]
         public IActionResult AddPersonnel()
         {
-            ViewBag.person = context.Personnels.ToList();
-            return View("Admin");
+            ViewBag.dep = new SelectList(context.Departments, "Id", "DepName");
+            ViewBag.perGet = context.Personnels.Include(x=>x.Department).ToList();
+            return View("AddPersonnel");
         }
         [HttpPost]
         public IActionResult AddPersonnel(Personnel per)
         {
-            var ekle = context.Personnels.Add(per);
-            context.SaveChanges();
-            return RedirectToAction("Admin",ekle);
+            if (!ModelState.IsValid)
+            {
+                var personnel = context.Departments.Where(x => x.Id == per.Department.Id).FirstOrDefault();
+                per.Department = personnel;
+                context.Personnels.Add(per);
+                context.SaveChanges();
+              
+                return RedirectToAction("AddPersonnel");
+            }
+            else
+            {
+                
+                return View("Index");
+            }
+        }
 
-            // return RedirectToAction("AddDepartment", ekle);  partiala yönlendirmek için
-            // @await Html.PartialAsync("_EditDepartmentPartial", item)
+        public IActionResult RemovePersonnel(int id)
+        {
+            var rp = context.Personnels.Find(id);
+            context.Personnels.Remove(rp);
+            context.SaveChanges();
+
+            return RedirectToAction("AddPersonnel");
         }
 
         [HttpGet]
-        public IActionResult Admin()
-        {
-            ViewBag.person = new SelectList(context.Personnels,"Id", "NameSurname");
+         public IActionResult AddService()
+         {
             ViewBag.con = new SelectList(context.Conditions, "Id", "CondName");
-            ViewBag.BTPerson = new SelectList(context.BTPersonnels, "Id", "NameSurname");
-            ViewBag.ServiceGet = context.Services.Include(x=>x.Personnel).ToList();
-            
-            return View();
-        }
-
-
+            ViewBag.BTPer = new SelectList(context.BTPersonnels, "Id", "NameSurname");
+            ViewBag.per = new SelectList(context.Personnels, "Id", "NameSurname");
+            ViewBag.ser = context.Services.Include(x=>x.Condition).Include(x=>x.BTPersonnel).Include(x=>x.Personnel).ToList();
+            return View("AddService");
+         }
         [HttpPost]
-        public IActionResult Admin(Service ser)
+        public IActionResult AddService(Service ser)
         {
+            if (!ModelState.IsValid)
+            {
+                var  Con = context.Conditions.Where(x=> x.Id == ser.Condition.Id).FirstOrDefault();
+                var BTPer = context.BTPersonnels.Where(x => x.Id == ser.BTPersonnel.Id).FirstOrDefault();
+                var Per = context.Personnels.Where(x => x.Id == ser.Personnel.Id).FirstOrDefault();
+                ser.Condition = Con;
+                ser.BTPersonnel = BTPer;
+                ser.Personnel = Per;
 
-            var pers = context.Personnels.Where(x => x.Id == ser.Personnel.Id).FirstOrDefault();
-            var cond = context.Conditions.Where(x => x.Id == ser.Condition.Id).FirstOrDefault();
-            var BTPers = context.BTPersonnels.Where(x => x.Id == ser.BTPersonnel.Id).FirstOrDefault();
-            if(pers == null)
+                context.Services.Add(ser);
+                context.SaveChanges();
+
+                return RedirectToAction("AddService");
+            }
+            else
             {
 
+                return View("Index");
             }
-            ser.Personnel = pers;
-            ser.Condition = cond;
-            ser.BTPersonnel = BTPers;
-            context.Services.Add(ser);
+        }
+        public IActionResult RemoveService(int id)
+        {
+            var rd = context.Services.Find(id);
+            context.Services.Remove(rd);
             context.SaveChanges();
-          
-            return View("Admin");
+           
+            return RedirectToAction("AddService");
         }
 
- 
     }
 }

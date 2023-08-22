@@ -10,8 +10,9 @@ namespace TaskManagement.Models
         public DateTime EndTime { get; set; }
         public string ServiceDescription { get; set; }
         public string WorkerNote { get; set; }
-        public Condition Condition { get; set; }
-        public Personnel Personnel { get; set; }
         public BTPersonnel BTPersonnel { get; set; }
+        public Personnel Personnel { get; set; }
+        public Condition Condition { get; set; }
+   
     }
 }

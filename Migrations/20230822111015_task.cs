@@ -12,7 +12,7 @@ namespace TaskManagement.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "BTPersonnel",
+                name: "BTPersonnels",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -25,7 +25,7 @@ namespace TaskManagement.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BTPersonnel", x => x.Id);
+                    table.PrimaryKey("PK_BTPersonnels", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,8 +60,7 @@ namespace TaskManagement.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NameSurname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DepartmentId = table.Column<int>(type: "int", nullable: false)
@@ -88,17 +87,17 @@ namespace TaskManagement.Migrations
                     EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ServiceDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     WorkerNote = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ConditionId = table.Column<int>(type: "int", nullable: false),
+                    BTPersonnelId = table.Column<int>(type: "int", nullable: false),
                     PersonnelId = table.Column<int>(type: "int", nullable: false),
-                    BTPersonnelId = table.Column<int>(type: "int", nullable: false)
+                    ConditionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Services", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Services_BTPersonnel_BTPersonnelId",
+                        name: "FK_Services_BTPersonnels_BTPersonnelId",
                         column: x => x.BTPersonnelId,
-                        principalTable: "BTPersonnel",
+                        principalTable: "BTPersonnels",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -143,7 +142,7 @@ namespace TaskManagement.Migrations
                 name: "Services");
 
             migrationBuilder.DropTable(
-                name: "BTPersonnel");
+                name: "BTPersonnels");
 
             migrationBuilder.DropTable(
                 name: "Conditions");

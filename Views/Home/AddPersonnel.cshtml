@@ -1,5 +1,87 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿﻿@using TaskManagement.Models;
+
+@model TaskManagement.Models.Personnel;
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mt-4">
+            <form asp-action="AddPersonnel" method="post">
+                <div class="mb-3">
+
+                    <label for="exampleFormControlInput1" class="form-label">Personnel Name </label>
+                    <input type="text" class="form-control" name="NameSurname" required="" placeholder="Name Suranme">
+
+                    <label for="exampleFormControlInput1" class="form-label">Personnel Phone </label>
+                    <input type="text" class="form-control" name="Phone" required="" placeholder="Phone">
+
+                    <label for="exampleFormControlInput1" class="form-label">Personnel Mail </label>
+                    <input type="text" class="form-control" name="Email" required="" placeholder="Mail">
+
+                    <div class="form">
+                        <label for="exampleFormControlInput1" class="form-label">Select Department</label>
+                        @Html.DropDownListFor(x=> x.Department.Id,(SelectList)ViewBag.dep, new{ @class = "form-control" })
+                    </div>
+
+                </div>
+                <button class="btn btn-outline-success" type="submit">Add Personnel</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 mt-4">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name Surname</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Mail</th>
+                    <th scope="col">Department</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.perGet as List<Personnel>)
+                {
+                    <tr>
+                        <th scope="row">@item.Id</th>
+                        <td>@item.NameSurname</td>
+                        <td>@item.Phone</td>
+                        <td>@item.Email</td>
+                        <td>@item.Department.DepName</td>
+                        <td>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-@item.Id">
+                                Delete
+                            </button>
+                        </td>
+
+                    </tr>
+                    <div class="modal fade" id="delete-@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Delete</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure want to delete this item?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a href="~/Home/RemovePersonnel?id=@item.Id" id="deleteBtn" class="btn btn-danger mr-1">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </tbody>
+
+
+        </table>
+    </div>
+</div>

@@ -24,11 +24,11 @@ namespace TaskManagement.Migrations
 
             modelBuilder.Entity("TaskManagement.Models.BTPersonnel", b =>
                 {
-                    b.Property<int>("BTPersonnelId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BTPersonnelId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Authority")
                         .IsRequired()
@@ -50,54 +50,54 @@ namespace TaskManagement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("BTPersonnelId");
+                    b.HasKey("Id");
 
                     b.ToTable("BTPersonnels");
                 });
 
             modelBuilder.Entity("TaskManagement.Models.Condition", b =>
                 {
-                    b.Property<int>("ConditionId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ConditionId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CondName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ConditionId");
+                    b.HasKey("Id");
 
                     b.ToTable("Conditions");
                 });
 
             modelBuilder.Entity("TaskManagement.Models.Department", b =>
                 {
-                    b.Property<int>("DeparmentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeparmentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("DepName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("DeparmentId");
+                    b.HasKey("Id");
 
                     b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("TaskManagement.Models.Personnel", b =>
                 {
-                    b.Property<int>("PersonnelId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PersonnelId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DepartmentDeparmentId")
+                    b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -112,20 +112,20 @@ namespace TaskManagement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PersonnelId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("DepartmentDeparmentId");
+                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Personnels");
                 });
 
             modelBuilder.Entity("TaskManagement.Models.Service", b =>
                 {
-                    b.Property<int>("ServiceId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServiceId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BTPersonnelId")
                         .HasColumnType("int");
@@ -154,7 +154,7 @@ namespace TaskManagement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ServiceId");
+                    b.HasKey("Id");
 
                     b.HasIndex("BTPersonnelId");
 
@@ -169,7 +169,7 @@ namespace TaskManagement.Migrations
                 {
                     b.HasOne("TaskManagement.Models.Department", "Department")
                         .WithMany("Personnel")
-                        .HasForeignKey("DepartmentDeparmentId")
+                        .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

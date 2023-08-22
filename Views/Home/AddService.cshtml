@@ -1,0 +1,122 @@
+﻿﻿@using TaskManagement.Models;
+
+@model TaskManagement.Models.Service;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mt-4">
+            <form asp-action="AddService" method="post">
+                <div class="col-md-8">
+
+                    <label for="exampleFormControlInput1" class="form-label">Service Name </label>
+                    <input type="text" class="form-control" name="ServiceName" required="" placeholder="Service Name">
+                </div>
+
+                    <div class="col-md-2">
+                        <label for="exampleFormControlInput1" class="form-label">Begin Date </label>
+                        <input type="date" class="form-control" name="RecordTime" required="" placeholder="Begin">
+                    
+                        <label for="exampleFormControlInput1" class="form-label">Complete Date </label>
+                        <input type="date" class="form-control" name="EndTime" required="" placeholder="End">
+                    </div>
+
+                <div class="col-md-8">
+                    <label for="exampleFormControlInput1" class="form-label">Service Description </label>
+                    <input type="text" class="form-control" name="ServiceDescription" required="" placeholder="Description">
+
+                    <label for="exampleFormControlInput1" class="form-label">Worker Note </label>
+                    <input type="text" class="form-control" name="WorkerNote" required="" placeholder="Note">
+
+                    <div class="form">
+                    <label for="exampleFormControlInput1" class="form-label">Status </label>
+                        @Html.DropDownListFor(x=> x.Condition.Id,(SelectList)ViewBag.con,new{ @class = "form-control" })
+                    </div>
+
+                    <div class="form">
+                    <label for="exampleFormControlInput1" class="form-label">IT Personnel </label>
+                        @Html.DropDownListFor(x=>x.BTPersonnel.Id,(SelectList)ViewBag.BTPer,new{ @class = "form-control" })
+                    </div>
+                    <div class="form">
+                        <label for="exampleFormControlInput1" class="form-label">Personnel</label>
+                        @Html.DropDownListFor(x=> x.Personnel.Id,(SelectList)ViewBag.per, new{ @class = "form-control" })
+                        <p></p>
+                    </div>
+                   
+                </div>
+                 
+                 <a class="btn btn-outline-success" href="/Home/AddPersonnel">Add personnel</a>
+                <div class="offset-sm-7">
+                    <button class="btn btn-outline-success" type="submit">Add Service</button>
+                </div>
+                
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 mt-4">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Service Name</th>
+                    <th scope="col">Begin Date</th>
+                    <th scope="col">Complete Date</th>
+                    <th scope="col">Worker Note</th>
+                    <th scope="col">Personnel</th>
+                    <th scope="col">IT Personnel</th>
+                    <th scope="col">Status</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+               @foreach (var item in ViewBag.ser as List<Service>)
+                {
+                    <tr>
+                        <th scope="row">@item.Id</th>
+                        <td>@item.ServiceName</td>
+                        <td>@item.RecordTime</td>
+                        <td>@item.EndTime</td>
+                        <td>@item.WorkerNote</td>
+                        <td>@item.Personnel.NameSurname</td>
+                        <td>@item.BTPersonnel.NameSurname</td>
+                        <td>@item.Condition.CondName</td>
+
+                        <td>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-@item.Id">
+                                Delete
+                            </button>
+
+                        </td>
+                        
+                    </tr>
+                    
+                    <div class="modal fade" id="delete-@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Delete</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure want to delete this item?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a href="~/Home/RemoveService?id=@item.Id" id="deleteBtn" class="btn btn-danger mr-1">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </tbody>
+
+
+        </table>
+    </div>
+</div>

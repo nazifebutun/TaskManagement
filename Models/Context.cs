@@ -13,6 +13,7 @@ namespace TaskManagement.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=NAZIFEBUTUN\\SQLEXPRESS; Database=TaskManagment; Integrated Security=True; TrustServerCertificate=True");
+            optionsBuilder.EnableSensitiveDataLogging();
         }
 
     }
