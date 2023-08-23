@@ -49,6 +49,51 @@ namespace TaskManagement.Controllers
             }
         }
 
+
+        [HttpGet]
+        public IActionResult EditPersonnel(int id)
+        {
+            ViewBag.dep = new SelectList(context.Departments, "Id", "DepName");
+            var per = context.Personnels.Find(id);
+            
+            return View("EditPersonnel",per);
+        }
+
+        [HttpPost]
+        public IActionResult EditPersonnel(Personnel personnel)
+        {
+            if (!ModelState.IsValid)
+            {
+
+                var perUp = context.Departments.Where(x => x.Id == personnel.Department.Id).FirstOrDefault();
+                personnel.Department = perUp;
+
+                var up = context.Personnels.Find(personnel.Id);
+
+                up.NameSurname = personnel.NameSurname;
+                up.Phone = personnel.Phone;
+                up.Email = personnel.Email;
+                up.Department = personnel.Department;
+
+               
+                context.SaveChanges();
+
+                return RedirectToAction("AddPersonnel");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+
+
+
+
+
+
+
+
         public IActionResult RemovePersonnel(int id)
         {
             var rp = context.Personnels.Find(id);

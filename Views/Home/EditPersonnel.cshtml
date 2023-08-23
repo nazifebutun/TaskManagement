@@ -1,0 +1,55 @@
+﻿@using TaskManagement.Models;
+@model TaskManagement.Models.Personnel;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mt-4">
+            <form asp-action="EditPersonnel" method="post">
+                <div class="mb-3">
+                
+                    <label for="exampleFormControlInput1" class="form-label">Personnel Name </label>
+                    <input type="text" class="form-control" name="NameSurname" asp-for="NameSurname" required="" placeholder="Name Surname">
+
+                    <label for="exampleFormControlInput1" class="form-label">Personnel Phone </label>
+                    <input type="text" class="form-control" name="Phone" asp-for="Phone" required="" placeholder="Phone">
+
+                    <label for="exampleFormControlInput1" class="form-label">Personnel Mail </label>
+                    <input type="text" class="form-control" name="Email" asp-for="Email" required="" placeholder="Mail">
+
+                    <div class="form">
+                        <label for="exampleFormControlInput1" class="form-label">Select Department</label>
+                        @Html.DropDownListFor(x=> x.Department.Id,(SelectList)ViewBag.dep, new{ @class = "form-control" }) 
+                    </div>
+                    
+                </div>
+                <button class="btn btn-outline-success" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@* @using (Html.BeginForm("EditPersonnel", "Home", FormMethod.Post) )
+                    {
+                        @Html.TextBoxFor(x=> x.Id,new{@class="form-control",required="",type="hidden"})
+
+                        <label for="exampleFormControlInput1" class="form-label">Personnel Name </label>
+                        @Html.TextBoxFor(x=>x.NameSurname,new{@class="form-control",required=""})
+
+
+                        <label for="exampleFormControlInput1" class="form-label">Personnel Phone </label>
+                        @Html.TextBoxFor(x=>x.Phone,new{@class="form-control",required=""})
+
+
+                        <label for="exampleFormControlInput1" class="form-label">Personnel Mail </label>
+                        @Html.TextBoxFor(x=>x.Email,new{@class="form-control",required=""})
+
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1" class="form-label">Select Department</label>
+                            @Html.DropDownListFor(x=> x.Department.Id,(SelectList)ViewBag.dep, new{ @class = "form-control" })
+                        </div>
+
+                        <button class="btn btn-outline-success" type="submit">Submit</button>
+                    }*@

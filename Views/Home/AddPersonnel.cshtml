@@ -54,6 +54,10 @@
                         <td>@item.Email</td>
                         <td>@item.Department.DepName</td>
                         <td>
+                            <a class="btn btn-outline-success"  href="/Home/EditPersonnel/@item.Id">Edit</a>
+                        </td>
+
+                        <td>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-@item.Id">
                                 Delete
                             </button>
