@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TaskManagement.Models.Authentication;
 
-namespace TaskManagement.Models
+namespace TaskManagement.Models.Data
 {
     public class Context : DbContext
     {
@@ -9,6 +10,7 @@ namespace TaskManagement.Models
         public DbSet<Personnel> Personnels { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<BTPersonnel> BTPersonnels { get; set; }
+        public DbSet<Register> Register { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

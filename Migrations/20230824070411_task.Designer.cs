@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using TaskManagement.Models;
+using TaskManagement.Models.Data;
 
 #nullable disable
 
 namespace TaskManagement.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20230822111015_task")]
+    [Migration("20230824070411_task")]
     partial class task
     {
         /// <inheritdoc />
@@ -25,7 +25,36 @@ namespace TaskManagement.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TaskManagement.Models.BTPersonnel", b =>
+            modelBuilder.Entity("TaskManagement.Models.Authentication.Register", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NameSurname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordConfirmation")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Register");
+                });
+
+            modelBuilder.Entity("TaskManagement.Models.Data.BTPersonnel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -58,7 +87,7 @@ namespace TaskManagement.Migrations
                     b.ToTable("BTPersonnels");
                 });
 
-            modelBuilder.Entity("TaskManagement.Models.Condition", b =>
+            modelBuilder.Entity("TaskManagement.Models.Data.Condition", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -75,7 +104,7 @@ namespace TaskManagement.Migrations
                     b.ToTable("Conditions");
                 });
 
-            modelBuilder.Entity("TaskManagement.Models.Department", b =>
+            modelBuilder.Entity("TaskManagement.Models.Data.Department", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -92,7 +121,7 @@ namespace TaskManagement.Migrations
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("TaskManagement.Models.Personnel", b =>
+            modelBuilder.Entity("TaskManagement.Models.Data.Personnel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -122,7 +151,7 @@ namespace TaskManagement.Migrations
                     b.ToTable("Personnels");
                 });
 
-            modelBuilder.Entity("TaskManagement.Models.Service", b =>
+            modelBuilder.Entity("TaskManagement.Models.Data.Service", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -168,9 +197,9 @@ namespace TaskManagement.Migrations
                     b.ToTable("Services");
                 });
 
-            modelBuilder.Entity("TaskManagement.Models.Personnel", b =>
+            modelBuilder.Entity("TaskManagement.Models.Data.Personnel", b =>
                 {
-                    b.HasOne("TaskManagement.Models.Department", "Department")
+                    b.HasOne("TaskManagement.Models.Data.Department", "Department")
                         .WithMany("Personnel")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -179,21 +208,21 @@ namespace TaskManagement.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("TaskManagement.Models.Service", b =>
+            modelBuilder.Entity("TaskManagement.Models.Data.Service", b =>
                 {
-                    b.HasOne("TaskManagement.Models.BTPersonnel", "BTPersonnel")
+                    b.HasOne("TaskManagement.Models.Data.BTPersonnel", "BTPersonnel")
                         .WithMany("Service")
                         .HasForeignKey("BTPersonnelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TaskManagement.Models.Condition", "Condition")
+                    b.HasOne("TaskManagement.Models.Data.Condition", "Condition")
                         .WithMany("Service")
                         .HasForeignKey("ConditionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TaskManagement.Models.Personnel", "Personnel")
+                    b.HasOne("TaskManagement.Models.Data.Personnel", "Personnel")
                         .WithMany("Service")
                         .HasForeignKey("PersonnelId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -206,22 +235,22 @@ namespace TaskManagement.Migrations
                     b.Navigation("Personnel");
                 });
 
-            modelBuilder.Entity("TaskManagement.Models.BTPersonnel", b =>
+            modelBuilder.Entity("TaskManagement.Models.Data.BTPersonnel", b =>
                 {
                     b.Navigation("Service");
                 });
 
-            modelBuilder.Entity("TaskManagement.Models.Condition", b =>
+            modelBuilder.Entity("TaskManagement.Models.Data.Condition", b =>
                 {
                     b.Navigation("Service");
                 });
 
-            modelBuilder.Entity("TaskManagement.Models.Department", b =>
+            modelBuilder.Entity("TaskManagement.Models.Data.Department", b =>
                 {
                     b.Navigation("Personnel");
                 });
 
-            modelBuilder.Entity("TaskManagement.Models.Personnel", b =>
+            modelBuilder.Entity("TaskManagement.Models.Data.Personnel", b =>
                 {
                     b.Navigation("Service");
                 });

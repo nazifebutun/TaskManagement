@@ -1,6 +1,5 @@
-﻿﻿@using TaskManagement.Models;
-
-@model TaskManagement.Models.Personnel;
+﻿﻿@using TaskManagement.Models.Data;
+@model Personnel;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -54,7 +53,7 @@
                         <td>@item.Email</td>
                         <td>@item.Department.DepName</td>
                         <td>
-                            <a class="btn btn-outline-success"  href="/Home/EditPersonnel/@item.Id">Edit</a>
+                            <a class="btn btn-outline-success" href="/Home/EditPersonnel/@item.Id">Edit</a>
                         </td>
 
                         <td>

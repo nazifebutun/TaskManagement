@@ -1,13 +1,12 @@
-﻿﻿@using TaskManagement.Models;
-
-@model TaskManagement.Models.Service;
+﻿﻿@using TaskManagement.Models.Data;
+@model Service;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12 mt-4">
+        <div class="col-md-12 offset-1">
             <form asp-action="AddService" method="post">
                 <div class="col-md-8">
 
@@ -15,13 +14,13 @@
                     <input type="text" class="form-control" name="ServiceName" required="" placeholder="Service Name">
                 </div>
 
-                    <div class="col-md-2">
-                        <label for="exampleFormControlInput1" class="form-label">Begin Date </label>
-                        <input type="date" class="form-control" name="RecordTime" required="" placeholder="Begin">
-                    
-                        <label for="exampleFormControlInput1" class="form-label">Complete Date </label>
-                        <input type="date" class="form-control" name="EndTime" required="" placeholder="End">
-                    </div>
+                <div class="col-md-2">
+                    <label for="exampleFormControlInput1" class="form-label">Begin Date </label>
+                    <input type="date" class="form-control" name="RecordTime" required="" placeholder="Begin">
+
+                    <label for="exampleFormControlInput1" class="form-label">Complete Date </label>
+                    <input type="date" class="form-control" name="EndTime" required="" placeholder="End">
+                </div>
 
                 <div class="col-md-8">
                     <label for="exampleFormControlInput1" class="form-label">Service Description </label>
@@ -31,12 +30,12 @@
                     <input type="text" class="form-control" name="WorkerNote" required="" placeholder="Note">
 
                     <div class="form">
-                    <label for="exampleFormControlInput1" class="form-label">Status </label>
+                        <label for="exampleFormControlInput1" class="form-label">Status </label>
                         @Html.DropDownListFor(x=> x.Condition.Id,(SelectList)ViewBag.con,new{ @class = "form-control" })
                     </div>
 
                     <div class="form">
-                    <label for="exampleFormControlInput1" class="form-label">IT Personnel </label>
+                        <label for="exampleFormControlInput1" class="form-label">IT Personnel </label>
                         @Html.DropDownListFor(x=>x.BTPersonnel.Id,(SelectList)ViewBag.BTPer,new{ @class = "form-control" })
                     </div>
                     <div class="form">
@@ -44,16 +43,15 @@
                         @Html.DropDownListFor(x=> x.Personnel.Id,(SelectList)ViewBag.per, new{ @class = "form-control" })
                         <p></p>
                     </div>
-                   
+
                 </div>
-                 
-                 <a class="btn btn-outline-success" href="/Home/AddPersonnel">Add personnel</a>
-                <div class="offset-sm-7">
+                <div class="offset-sm-6">
+                    <a class="btn btn-outline-success" href="/Home/AddPersonnel">Add Personnel</a>
                     <button class="btn btn-outline-success" type="submit">Add Service</button>
                 </div>
-                
+
             </form>
-            
+
         </div>
     </div>
 </div>
@@ -71,11 +69,11 @@
                     <th scope="col">Personnel</th>
                     <th scope="col">IT Personnel</th>
                     <th scope="col">Status</th>
-                    
+
                 </tr>
             </thead>
             <tbody>
-               @foreach (var item in ViewBag.ser as List<Service>)
+                @foreach (var item in ViewBag.ser as List<Service>)
                 {
                     <tr>
                         <th scope="row">@item.Id</th>
@@ -93,9 +91,9 @@
                             </button>
 
                         </td>
-                        
+
                     </tr>
-                    
+
                     <div class="modal fade" id="delete-@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">

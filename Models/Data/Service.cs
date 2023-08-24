@@ -1,6 +1,4 @@
-﻿using TaskManagement.Models;
-
-namespace TaskManagement.Models
+﻿namespace TaskManagement.Models.Data
 {
     public class Service
     {
@@ -13,6 +11,6 @@ namespace TaskManagement.Models
         public BTPersonnel BTPersonnel { get; set; }
         public Personnel Personnel { get; set; }
         public Condition Condition { get; set; }
-   
+
     }
 }

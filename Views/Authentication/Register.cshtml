@@ -1,0 +1,87 @@
+﻿@using TaskManagement.Models.Authentication;
+@model TaskManagement.Models.Authentication.Register;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Success"] != null)
+{
+    <script>
+        Swal.fire({
+            title: '@ViewBag.Success',
+            width: 600,
+            padding: '3em',
+            color: '#716add',
+            background: '#fff url(https://sweetalert2.github.io/images/trees.png)',
+            backdrop: `
+            rgba(0,0,123,0.4)
+            url("https://media.tenor.com/AAqRjAwmdmEAAAAC/unfriend-cat.gif")
+            center top
+            no-repeat
+            `
+        })
+    </script>
+}
+
+@if (TempData["Failed"] != null)
+{
+    <script>
+        Swal.fire({
+            title: '@ViewBag.Duplicate',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        })
+    </script>
+
+}
+<form asp-action="Register" method="post">
+    <div class="container">
+        <div class="col-md-8 offset-sm-2">
+            <div class="form-group">
+
+                <label for="exampleFormControlInput1" class="form-label">Name Surname </label>
+                <input type="text" class="form-control" name="NameSurname" required="" placeholder="Name Surname">
+
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" name="Email" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" name="Password" placeholder="Password" id="myInput">
+                <input type="checkbox" class="form-check-input" onclick="myFunction()">  <small class="form-text text-muted">Show Password</small>
+                <p></p>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password Check</label>
+                <input type="password" class="form-control" name="PasswordConfirmation" placeholder="Password" id="myInput2">
+                <input type="checkbox" class="form-check-input" onclick="myFunction2()"> <small class="form-text text-muted">Show Password</small>
+                <p></p>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    function myFunction() {
+        var x = document.getElementById("myInput");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    } function myFunction2() {
+        var x = document.getElementById("myInput2");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>

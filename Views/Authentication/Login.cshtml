@@ -1,0 +1,55 @@
+﻿@using TaskManagement.Models.Authentication;
+@model TaskManagement.Models.Authentication.Register;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["Reg"] != null)
+{
+    <script>
+        Swal.fire({
+            title: '@ViewBag.Reg',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        })
+    </script>
+
+}
+<form asp-action="Login" method="post">
+    <div class="container">
+        <div class="col-md-8 offset-sm-2">
+            <div class="form-group">
+
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" name="Email" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" name="Password" placeholder="Password" id="myInput">
+                <input type="checkbox" class="form-check-input" onclick="myFunction()">  <small class="form-text text-muted">Show Password</small>
+                <p></p>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    function myFunction()
+    {
+        var x = document.getElementById("myInput");
+        if (x.type === "password") 
+        {
+            x.type = "text";
+        } else 
+        {
+            x.type = "password";
+        }
+    }
+</script>
