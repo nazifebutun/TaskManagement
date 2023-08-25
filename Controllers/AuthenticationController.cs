@@ -9,6 +9,10 @@ namespace TaskManagement.Controllers
     {
         Context context = new Context();
 
+        public IActionResult Welcome()
+        {
+            return View();
+        }
         [HttpGet]
         public IActionResult Register(int id = 0)
         {

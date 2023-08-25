@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TaskManagement.Models.Authentication;
@@ -6,16 +7,16 @@ using TaskManagement.Models.Data;
 
 namespace TaskManagement.Controllers
 {
-
+    [Authorize]
     public class HomeController : Controller
     {
 
         Context context = new Context();
-
         public IActionResult Index()
         {
             return View();
         }
+
 
 
         [HttpGet]
@@ -119,7 +120,7 @@ namespace TaskManagement.Controllers
             else
             {
 
-                return View("Index");
+                return View("AddService");
             }
         }
         public IActionResult RemoveService(int id)
